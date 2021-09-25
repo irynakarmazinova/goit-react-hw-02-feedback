@@ -1,12 +1,15 @@
 import React from 'react';
 
 // рендерит секцию с заголовком и детей (children)
-class Section extends React.Component {
-  render() {
-    return <div></div>;
-  }
-
-  title = '';
-}
+const Section = ({ children }) => (
+  <section>
+    {/* <h2></h2> */}
+    {children}
+  </section>
+);
 
 export default Section;
+
+{
+  /*  title = '' */
+}

@@ -1,11 +1,28 @@
-import React from 'react';
+import { Component } from 'react';
 
-class Notification extends React.Component {
+class Notification extends Component {
+  state = {
+    visible: true,
+  };
+
+  hide = () => {
+    this.setState({ visible: false });
+  };
+
   render() {
-    return <div></div>;
+    return (
+      <div className="notification">
+        {this.state.visible && (
+          // <p className="notification__message" onClick={this.hide}>
+          <p className="notification__message">No feedback given</p>
+        )}
+      </div>
+    );
   }
-
-  message = 'No feedback given';
 }
 
 export default Notification;
+
+{
+  /*   message = 'No feedback given'; */
+}
