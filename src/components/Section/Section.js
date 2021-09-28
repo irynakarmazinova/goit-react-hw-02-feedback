@@ -1,15 +1,11 @@
 import React from 'react';
 
 // рендерит секцию с заголовком и детей (children)
-const Section = ({ children }) => (
-  <section>
-    {/* <h2></h2> */}
+const Section = ({ title, children }) => (
+  <section className="title">
+    {title}
     {children}
   </section>
 );
 
 export default Section;
-
-{
-  /*  title = '' */
-}
