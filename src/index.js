@@ -4,8 +4,6 @@ import 'modern-normalize/modern-normalize.css';
 import './index.scss';
 import App from './App';
 
-// var classNames = require('classnames');
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
