@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Section from 'components/Section/Section';
+import Section from './components/Section';
 import FeedbackOptions from './components/Feedback/FeedbackOptions';
-import Statistics from 'components/Feedback/Statistics';
-import Notification from 'components/Notification/Notification';
+import Statistics from './components/Feedback/Statistics';
+import Notification from './components/Notification';
 
 import './App.scss';
 
@@ -21,41 +21,16 @@ class App extends Component {
     bad: 0,
   };
 
-  good = () => {
+  leaveFeedback = e => {
+    const targetBtn = e.target.textContent.toLowerCase();
+    // const targetBtn = e.target.textContent;
+    // const targetBtn = e.currentTarget;
+    // const targetBtn = e.target;
+
     // prevActualState - ссылка на актуальное состояние на момент обновления, вызова этой функции
-    this.setState(prevActualState => ({
-      good: prevActualState.good + 1,
-    }));
-  };
-  neutral = () => {
-    this.setState(prevActualState => ({
-      neutral: prevActualState.neutral + 1,
-    }));
-  };
-  bad = () => {
-    this.setState(prevActualState => {
-      return { bad: prevActualState.bad + 1 };
+    this.setState(prevState => {
+      return { [targetBtn]: prevState[targetBtn] + 1 };
     });
-  };
-
-  options = () => {
-    const keys = Object.keys(this.state);
-    const key = keys.map(key => key);
-    // const key = keys.map(key => `${key} : ${this.state[key]}`);
-    return key;
-  };
-
-  onLeaveFeedback = () => {
-    // const values = this.setState(prevActualState => {
-    //   const value = Object.values(this.state);
-    //   return { value: prevActualState.value + 1 };
-    // });
-    // console.log(values);
-    // return values;
-    // this.setState(prevActualState => {
-    //   return { this.options: prevActualState.this.options + 1 };
-    // });
-    // return this.options();
   };
 
   countTotalFeedback = () => {
@@ -70,14 +45,7 @@ class App extends Component {
     const { good, neutral, bad } = this.state;
     let positivePercentage = 0;
 
-    // if (positivePercentage === 0) {
-    //   return positivePercentage;
-    // } else {
-    //  positivePercentage = Math.round((good * 100) / (good + neutral + bad));
-    // return positivePercentage;
-    // }
-
-    positivePercentage = Math.round((good * 100) / (good + neutral + bad));
+    positivePercentage = Math.round((good * 100) / (good + neutral + bad)) || 0;
     return positivePercentage;
   };
 
@@ -85,29 +53,26 @@ class App extends Component {
     const { good, neutral, bad } = this.state;
 
     return (
-      <div>
+      <div className="container">
         <h1 className="visually_hidden">Feedback</h1>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            // onGood={this.good}
-            // onNeutral={this.neutral}
-            // onBad={this.bad}
-            options={this.options}
-            onLeaveFeedback={this.onLeaveFeedback}
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.leaveFeedback}
           />
         </Section>
         <Section title="Statistics">
-          <Statistics
-            // поднятие состояния-от родителя вниз детей кидаются пропсы
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={this.countTotalFeedback()}
-            positivePercentage={this.countPositiveFeedbackPercentage()}
-          />
-
-          {this.countTotalFeedback === 0 && (
+          {this.countTotalFeedback() === 0 ? (
             <Notification message="No feedback given" />
+          ) : (
+            <Statistics
+              // поднятие состояния-от родителя вниз детей кидаются пропсы
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
           )}
         </Section>
       </div>
@@ -131,12 +96,12 @@ export default App;
 // записать, не основываясь на предыдущем - объект
 // this.setState({value: 123123123})
 // записать основываясь на предыдущем - функция
-//  this.setState(prevActualState => {
-// return { value: prevActualState.value + 1 };
+//  this.setState(prevState => {
+// return { value: prevState.value + 1 };
 // });
 // или
-// this.setState(prevActualState => ({
-// value: prevActualState.value + 1,
+// this.setState(prevState => ({
+// value: prevState.value + 1,
 // }));
 
 // массив объектов const colors =[{},{},{}]
@@ -148,6 +113,3 @@ export default App;
 
 // onClick={this.setActiveIdx(index)}-на это место будет возвращаен вызов функции-результат- те вернет undefind
 // onClick={() => this.setActiveIdx(index)}-вернут ссылку на функцию с индеком
-
-// -----------------
-// в options ты передаешь массив значений своих будущих кнопок, в onLeaveFeedback ты передаешь колбек для кнопок. массив значение будущих кнопок-Передаєш туди state i map-аєш його ключі, щоб кнопки були good, neutral і т.д.

@@ -1,5 +1,9 @@
+@import './sass/base/common.scss';
 @import './sass/utils/visually-hidden.scss';
+
 @import './components/Section/section.scss';
-@import './components/Feedback/feedbackOptions.scss';
-@import './components/Feedback/statistics.scss';
+@import './sass/base/container.scss';
+@import './components/Feedback/FeedbackOptions/feedbackOptions.scss';
+@import './components/Feedback/Statistics/statistics.scss';
+
 @import './components/Notification/notification.scss';
