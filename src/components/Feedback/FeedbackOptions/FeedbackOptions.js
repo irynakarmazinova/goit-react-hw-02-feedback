@@ -8,7 +8,7 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => (
         // option - имя одного state`a
         // для key не использовать index, только id
         <li key={option} className="feedback_item">
-          <button className="btn" onClick={onLeaveFeedback}>
+          <button type="submit" className="btn" onClick={onLeaveFeedback}>
             {/* {option.charAt(0).toUpperCase() + option.slice(1)} */}
             {option[0].toUpperCase() + option.slice(1)}
           </button>
