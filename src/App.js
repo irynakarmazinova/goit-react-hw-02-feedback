@@ -7,6 +7,12 @@ import Notification from './components/Notification';
 
 import './App.scss';
 
+const options = [
+  { name: 'good', label: 'Good' },
+  { name: 'neutral', label: 'Neutral' },
+  { name: 'bad', label: 'Bad' },
+];
+
 class App extends Component {
   // static defaultProps = {
   //   initialValue: 0,
@@ -21,43 +27,50 @@ class App extends Component {
     bad: 0,
   };
 
-  leaveFeedback = e => {
-    const targetBtn = e.target.textContent.toLowerCase();
-    // const targetBtn = e.target.textContent;
-    // const targetBtn = e.currentTarget;
-    // const targetBtn = e.target;
+  leaveFeedback = ({ target: { name } }) => {
+    // leaveFeedback = e => {
+    //   const targetBtn = e.target.textContent.toLowerCase();
+    //   console.log(e.target.name);
 
     // prevActualState - ссылка на актуальное состояние на момент обновления, вызова этой функции
-    this.setState(prevState => {
-      return { [targetBtn]: prevState[targetBtn] + 1 };
-    });
+    this.setState(prevState => ({
+      ...prevState,
+      [name]: prevState[name] + 1,
+
+      // [targetBtn]: prevState[targetBtn] + 1,
+    }));
   };
 
   countTotalFeedback = () => {
     const { good, neutral, bad } = this.state;
-    let total = 0;
-
-    total = good + neutral + bad;
-    return total;
+    return good + neutral + bad;
   };
 
   countPositiveFeedbackPercentage = () => {
     const { good, neutral, bad } = this.state;
-    let positivePercentage = 0;
-
-    positivePercentage = Math.round((good * 100) / (good + neutral + bad)) || 0;
-    return positivePercentage;
+    return Math.round((good * 100) / (good + neutral + bad));
   };
 
   render() {
     const { good, neutral, bad } = this.state;
+    // const fields = {
+    //   good: { label: 'Good', value: good },
+    //   neutral: { label: 'Neutral', value: neutral },
+    //   bad: { label: 'Bad', value: bad },
+    //   total: { label: 'Total', value: this.countTotalFeedback() },
+    //   positivePercentage: {
+    //     label: 'Positive feedback',
+    //     value: this.countPositiveFeedbackPercentage(),
+    //   },
+    // };
 
     return (
       <div className="container">
         <h1 className="visually_hidden">Feedback</h1>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={Object.keys(this.state)}
+            options={options}
+            // options={Object.keys(this.state)}
             onLeaveFeedback={this.leaveFeedback}
           />
         </Section>
@@ -72,6 +85,7 @@ class App extends Component {
               bad={bad}
               total={this.countTotalFeedback()}
               positivePercentage={this.countPositiveFeedbackPercentage()}
+              // {...fields}
             />
           )}
         </Section>
