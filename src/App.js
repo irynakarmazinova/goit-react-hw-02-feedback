@@ -7,11 +7,11 @@ import Notification from './components/Notification';
 
 import './App.scss';
 
-const options = [
-  { name: 'good', label: 'Good' },
-  { name: 'neutral', label: 'Neutral' },
-  { name: 'bad', label: 'Bad' },
-];
+// const options = [
+//   { name: 'good', label: 'Good' },
+//   { name: 'neutral', label: 'Neutral' },
+//   { name: 'bad', label: 'Bad' },
+// ];
 
 class App extends Component {
   // static defaultProps = {
@@ -27,17 +27,15 @@ class App extends Component {
     bad: 0,
   };
 
-  leaveFeedback = ({ target: { name } }) => {
-    // leaveFeedback = e => {
-    //   const targetBtn = e.target.textContent.toLowerCase();
-    //   console.log(e.target.name);
+  // leaveFeedback = ({ target: { name } }) => {
+  leaveFeedback = e => {
+    const targetBtn = e.target.textContent.toLowerCase();
 
     // prevActualState - ссылка на актуальное состояние на момент обновления, вызова этой функции
     this.setState(prevState => ({
       ...prevState,
-      [name]: prevState[name] + 1,
-
-      // [targetBtn]: prevState[targetBtn] + 1,
+      [targetBtn]: prevState[targetBtn] + 1,
+      // [name]: prevState[name] + 1,
     }));
   };
 
@@ -69,8 +67,8 @@ class App extends Component {
         <h1 className="visually_hidden">Feedback</h1>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={options}
-            // options={Object.keys(this.state)}
+            options={Object.keys(this.state)}
+            // options={options}
             onLeaveFeedback={this.leaveFeedback}
           />
         </Section>
